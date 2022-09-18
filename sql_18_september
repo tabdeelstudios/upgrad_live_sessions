@@ -1,0 +1,17 @@
+SELECT item, amount, customer_id, AVG(amount) OVER(PARTITION BY customer_id) AS avg_spend FROM Orders;
+
+INSERT INTO Orders(item, amount, customer_id) VALUES ("Monitor", 900, 1),("Monitor2", 500, 1),("Monitor3", 1000, 1);
+
+SELECT ROW_NUMBER() OVER (PARTITION BY status) AS shipping_row_no, status, customer FROM Shippings;
+
+SELECT first_name, country, DENSE_RANK() OVER (ORDER BY country DESC) AS rank_no FROM Customers;
+
+SELECT first_name, country, RANK() OVER (ORDER BY country DESC) AS rank_no FROM Customers;
+
+SELECT order_id, amount,
+CASE
+	WHEN amount > 1500 THEN 'Profit is 250Rs.'
+    WHEN amount > 800 THEN 'Profit is 100Rs.'
+    ELSE 'Profit is Rs.10'
+END AS profit_margin
+FROM Orders;
