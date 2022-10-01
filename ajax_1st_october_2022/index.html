@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- <button onclick="stopTimeout()">Stop Timeout</button>
+    <button onclick="stopInterval()">Stop Interval</button> -->
+    <p id="userEmail"></p>
+    <script>
+
+        // let count = 0;
+
+        // console.log("Hello!");
+        // console.log("World!");
+
+        // function printTimeout() {
+        //     console.log("This is from timeout!");
+        // }
+
+        // function printInterval() {
+        //     count = count + 1;
+        //     console.log("Count : " + count);
+        // }
+
+        // let myTimeout = setTimeout(printTimeout, 5000);
+        // function stopTimeout() {
+        //     clearTimeout(myTimeout);
+        // }
+
+        // let myInterval = setInterval(printInterval, 1000);
+        // function stopInterval() {
+        //     clearInterval(myInterval);
+        // }
+
+        // console.log("This is async!");
+
+        // Create the request
+        let myRequest = new XMLHttpRequest();
+
+        // Open the request
+        myRequest.open("PUT", "https://randomuser.me/api", true);
+
+        // Send the request
+        myRequest.send();
+
+        // Response Received
+        myRequest.onreadystatechange = () => {
+            if (myRequest.readyState === 4 && myRequest.status === 200) {
+                // console.log("Completed!");
+                // console.log(myRequest.responseText);
+                let userData = JSON.parse(myRequest.responseText);
+                // console.log(userData.results[0].email);
+                document.getElementById("userEmail").innerHTML = "Email : " + userData.results[0].email;
+            }
+        }
+
+    </script>
+</body>
+
+</html>
