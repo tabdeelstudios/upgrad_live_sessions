@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- <p id="joke">Loading...</p> -->
+    <input type="text" id="userBook">
+    <button onclick="fetchBooks()">Search</button>
+    <hr>
+    <h1>Here's what we found :</h1>
+    <ul id="booksDisplay"></ul>
+    <script>
+        // XMLHttpRequest
+
+
+        function fetchBooks() {
+            var userSearch = document.getElementById("userBook").value;
+            var myRequest = new XMLHttpRequest(); //state = 0
+            myRequest.open("GET", "https://www.googleapis.com/books/v1/volumes?q=" + userSearch, true);  // state = 1
+            myRequest.send(); //state = 2
+            //server processing -> state = 3
+            myRequest.onreadystatechange = () => {
+                if (myRequest.readyState === 4 && myRequest.status === 200) {
+                    //work with the data
+                    console.log(myRequest.responseText);
+                    var bookList = JSON.parse(myRequest.responseText);
+                    console.log(bookList);
+                    bookList.items.forEach(book => {
+                        var newBook = document.createElement("li");
+                        newBook.innerHTML = book.volumeInfo.title;
+                        var booksList = document.getElementById("booksDisplay");
+                        booksList.appendChild(newBook);
+                    });
+                    // convet json to javascript object
+                    // var jsJoke = JSON.parse(myRequest.responseText);
+                    // var finalJoke = "Joke : " + jsJoke.setup + jsJoke.delivery;
+                    // document.getElementById("joke").innerHTML = finalJoke;
+                    // console.log(finalJoke);
+                }
+            }
+        }
+
+
+// console.log("One");
+// var counter = 0;
+// var myTimeout = setTimeout(sayHello, 5000);
+// console.log("Two");
+// console.log("Three");
+// var myInterval = setInterval(addCounter, 2000);
+// console.log("Four");
+
+// function sayHello(){
+//   console.log("Hello!");
+// }
+
+// function addCounter(){
+//   counter++;
+//   console.log(counter);
+// }
+// clearTimeout(myTimeout);
+// clearInterval(myInterval);
+
+
+// var joke = `{
+//     "error": false,
+//     "category": "Pun",
+//     "type": "twopart",
+//     "setup": "You see, mountains aren't just funny.",
+//     "delivery": "They are hill areas.",
+//     "flags": {
+//         "nsfw": false,
+//         "religious": false,
+//         "political": false,
+//         "racist": false,
+//         "sexist": false,
+//         "explicit": false
+//     },
+//     "safe": true,
+//     "id": 270,
+//     "lang": "en"
+// }`;
+
+// console.log(joke);
+
+// // convet json to javascript object
+// var jsJoke = JSON.parse(joke);
+
+// var sendJoke = JSON.stringify(finalJoke);
+
+// // console.log(jsJoke);
+// // var finalJoke = "Joke : "+jsJoke.setup + jsJoke.delivery;
+// // console.log(finalJoke);
+// //convert javascript object to json
+// // console.log(sendJoke);
+
+    </script>
+</body>
+
+</html>
